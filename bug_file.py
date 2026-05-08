@@ -69,7 +69,7 @@ class OrderProcessor:
 
         # Descontar stock
         for product, quantity in order.items:
-            product.stok -= quantity   # ❌ BUG: typo en el atributo → AttributeError
+            product.stock -= quantity
 
         order.status = "completed"
         self.orders.append(order)
