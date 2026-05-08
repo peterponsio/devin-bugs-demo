@@ -33,8 +33,8 @@ class Order:
         """Calcula el total del pedido aplicando un descuento del 10% si supera 100€."""
         subtotal = sum(p.price * q for p, q in self.items)
         if subtotal > 100:
-            subtotal = subtotal * 0.90   # BUG: debería ser subtotal * (1 - 0.10)
-                                          # pero en realidad aquí está bien... el bug real está abajo
+            subtotal = subtotal * 0.90   
+                                          
         return subtotal
 
     def __repr__(self):
@@ -69,7 +69,7 @@ class OrderProcessor:
 
         # Descontar stock
         for product, quantity in order.items:
-            product.stok -= quantity   # ❌ BUG: typo en el atributo → AttributeError
+            product.stok -= quantity 
 
         order.status = "completed"
         self.orders.append(order)
@@ -114,14 +114,14 @@ if __name__ == "__main__":
     o1.add_item(teclado, 1)
     r1 = processor.process(o1)
     print("Pedido 1:", r1)
-    print(f"  Stock mouse tras pedido: {mouse.stock}")     # Nunca llega aquí: crash antes
-    print(f"  Stock teclado tras pedido: {teclado.stock}") # Nunca llega aquí: crash antes
+    print(f"  Stock mouse tras pedido: {mouse.stock}")     
+    print(f"  Stock teclado tras pedido: {teclado.stock}") 
 
     print()
 
     # Pedido 2: sin stock suficiente
     o2 = Order(2, "Carlos López")
-    o2.add_item(teclado, 10)   # Solo hay 3 (o 4 tras el bug del pedido 1)
+    o2.add_item(teclado, 10)  
     r2 = processor.process(o2)
     print("Pedido 2:", r2)
 
