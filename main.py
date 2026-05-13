@@ -14,10 +14,16 @@ def get_discount(
         raise HTTPException(status_code=400, detail="percent must be <= 100")
 
     discount_amount = round(price * percent / 100, 2)
-    final_price = round(price - discount_amount, 2)
+
+    commission = 0.0
+    if price > 500 and percent >= 30:
+        commission = round(discount_amount * 0.02, 2)
+
+    final_price = round(price - discount_amount + commission, 2)
 
     return {
         "original": price,
         "discount": discount_amount,
+        "commission": commission,
         "final": final_price,
     }
